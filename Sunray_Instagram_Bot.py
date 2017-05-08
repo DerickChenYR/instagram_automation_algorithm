@@ -11,11 +11,11 @@ timemark = datetime.datetime.now()
 
 
 
-API = InstagramAPI("","") #your username and password
+API = InstagramAPI("login","password") #your username and password
 API.login()
 
 userid = 0 #add the userid of your account
-mediaid = 0
+mediaid = 0 
 maxid = ''
 
 accounts= {
@@ -31,7 +31,7 @@ accounts= {
 		
 		'key3':284341891,
 		'key4':22963539,
-		'key5' :259394152,
+		'key5' :259394152
 	}
 }
 
@@ -44,18 +44,15 @@ def throttle():
 	time.sleep(sleeptime)
 
 
-#Generate a recent follower pool for universities instagram accounts
 
-
-
-
-#Follow harvested profiles in the follow_pool list
+#Follow Procedures
 
 def follow_procedure():
 
 	follow_counter = 0
 	follow_pool = []
 
+	#Generate a recent follower pool for universities instagram accounts
 	for sets in accounts:
 		for key,value in accounts[sets].items():
 			#print (str(value))
@@ -68,6 +65,7 @@ def follow_procedure():
 	#print (follow_pool)
 	print ("Follow Pool - Harvested %i\n" %len(follow_pool))
 
+	#Follow harvested profiles in the follow_pool list
 	for i in follow_pool:
 		legit_user = True
 		API.userFriendship(i)
