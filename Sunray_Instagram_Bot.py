@@ -14,44 +14,25 @@ timemark = datetime.datetime.now()
 API = InstagramAPI("","") #your username and password
 API.login()
 
-userid = 0
+userid = 0 #add the userid of your account
 mediaid = 0
 maxid = ''
 
-cities= {
+accounts= {
 
-	'NYC' : {	
+	'set1' : {	
 
 		#key:user ID
-		"NYU":409064094,
-		"Columbia":480466954	
+		"key1":409064094,
+		"key2":480466954	
 	},
 
-	'Boston' : {
+	'set2' : {
 		
-		'BU':284341891,
-		'BC':22963539,
-		'Harvard' :259394152,
-		'MIT Engineering' :3183954478,
-		'Tufts' :1366008,
-		'Northeastern':4558614
-	},
-
-	'London' : {
-		
-		'UCL':1112437534,
-		'LSE':1686206464,
-		'ICL':1360916305
-	},
-
-
-	'SF' : {
-		
-		'Stanford':466003,
-		'USF':249226070,
-		'UCB':249761036
+		'key3':284341891,
+		'key4':22963539,
+		'key5' :259394152,
 	}
-
 }
 
 
@@ -75,8 +56,8 @@ def follow_procedure():
 	follow_counter = 0
 	follow_pool = []
 
-	for city in cities:
-		for sch,value in cities[city].items():
+	for sets in accounts:
+		for key,value in accounts[sets].items():
 			#print (str(value))
 
 			API.getUserFollowers(value)
@@ -100,6 +81,7 @@ def follow_procedure():
 		#Skip if already following/request sent
 		if friendship_status['outgoing_request'] == True or friendship_status['following'] == True:
 			print ("Already following/sent follow request. Skip\n")
+			follow_pool.remove(i)
 			continue
 
 		else:
@@ -113,12 +95,14 @@ def follow_procedure():
 				if i_follower/i_following >=2:
 					legit_user = False
 					print ("Likely to be Celebgram. Skip\n")
+					follow_pool.remove(i)
 					continue
 
 				#Check for Fake Acc
 				elif i_following/i_follower >=2:
 					legit_user = False
 					print ("Likely to be Fake Acc. Skip\n")
+					follow_pool.remove(i)
 					continue
 
 				#Follow healthy profile
@@ -128,6 +112,7 @@ def follow_procedure():
 					API.follow(i)
 					follow_counter += 1
 					print ("Followed %s, Session Followed #%i\n" %(i_username, follow_counter))
+					follow_pool.remove(i)
 					throttle()
 
 			#Follow private profile
@@ -136,6 +121,7 @@ def follow_procedure():
 				API.follow(i)
 				follow_counter += 1
 				print ("Followed %s, Session Followed #%i\n" %(i_username, follow_counter))
+				follow_pool.remove(i)
 				throttle()
 
 
