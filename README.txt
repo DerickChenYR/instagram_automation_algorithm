@@ -1,3 +1,5 @@
+[Not Actively Maintained] API has been encountering issues since December 2017
+
 Sunray Instagram Bot Functionality Introduction
 
 TLDR: This instagram bot harvests targeted instagram profiles and allow you to follow
